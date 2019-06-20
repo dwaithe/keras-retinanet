@@ -417,6 +417,7 @@ def parse_args(args):
     parser.add_argument('--image-max-side',   help='Rescale the image if the largest side is larger than max_side.', type=int, default=1333)
     parser.add_argument('--config',           help='Path to a configuration parameters .ini file.')
     parser.add_argument('--weighted-average', help='Compute the mAP using the weighted average of precisions among classes.', action='store_true')
+
     parser.add_argument('--compute-val-loss', help='Compute validation loss during training', dest='compute_val_loss', action='store_false')
     parser.add_argument('--flip-vertical', help='Whether to also randomly flip data vertically', dest='flip_vertical', action='store_true')
 
