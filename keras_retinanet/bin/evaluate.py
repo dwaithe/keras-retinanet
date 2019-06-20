@@ -28,7 +28,7 @@ if __name__ == "__main__" and __package__ is None:
     __package__ = "keras_retinanet.bin"
 
 # Change these to absolute imports if you copy this script outside the keras_retinanet package.
-from .. import models
+from keras_retinanet import models
 from ..preprocessing.csv_generator import CSVGenerator
 from ..preprocessing.pascal_voc import PascalVocGenerator
 from ..utils.config import read_config_file, parse_anchor_parameters
@@ -158,6 +158,12 @@ def main(args=None):
         from ..utils.coco_eval import evaluate_coco
         evaluate_coco(generator, model, args.score_threshold)
     else:
+        
+        
+
+        
+
+        
         average_precisions = evaluate(
             generator,
             model,
@@ -166,6 +172,7 @@ def main(args=None):
             max_detections=args.max_detections,
             save_path=args.save_path
         )
+        
 
         # print evaluation
         total_instances = []

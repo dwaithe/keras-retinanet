@@ -20,7 +20,7 @@ from .visualization import draw_detections, draw_annotations
 import keras
 import numpy as np
 import os
-
+import _pickle as pickle
 import cv2
 import progressbar
 assert(callable(progressbar.progressbar)), "Using wrong progressbar module, install 'progressbar2' instead."
@@ -81,6 +81,7 @@ def _get_detections(generator, model, score_threshold=0.05, max_detections=100, 
             image = image.transpose((2, 0, 1))
 
         # run network
+        #print(model.predict_on_batch(np.expand_dims(image, axis=0))[:3])
         boxes, scores, labels = model.predict_on_batch(np.expand_dims(image, axis=0))[:3]
 
         # correct boxes for image scale
@@ -171,8 +172,11 @@ def evaluate(
 
     # all_detections = pickle.load(open('all_detections.pkl', 'rb'))
     # all_annotations = pickle.load(open('all_annotations.pkl', 'rb'))
-    # pickle.dump(all_detections, open('all_detections.pkl', 'wb'))
-    # pickle.dump(all_annotations, open('all_annotations.pkl', 'wb'))
+    for img in generator.image_names:
+        print('names',img)
+    pickle.dump(generator, open('generator.pkl', 'wb'))
+    pickle.dump(all_detections, open('all_detections.pkl', 'wb'))
+    pickle.dump(all_annotations, open('all_annotations.pkl', 'wb'))
 
     # process detections and annotations
     for label in range(generator.num_classes()):

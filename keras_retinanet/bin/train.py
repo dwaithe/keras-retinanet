@@ -237,7 +237,14 @@ def create_generators(args, preprocess_image):
             flip_y_chance=0.5,
         )
     else:
-        transform_generator = random_transform_generator(flip_x_chance=0.5)
+
+        if args.flip_vertical == True:
+            print("flipping True")
+            transform_generator = random_transform_generator(flip_x_chance=0.5,flip_y_chance=0.5)
+        else:
+            print("flipping False")
+            transform_generator = random_transform_generator(flip_x_chance=0.5)
+        
 
     if args.dataset_type == 'coco':
         # import here to prevent unnecessary dependency on cocoapi
@@ -411,6 +418,7 @@ def parse_args(args):
     parser.add_argument('--config',           help='Path to a configuration parameters .ini file.')
     parser.add_argument('--weighted-average', help='Compute the mAP using the weighted average of precisions among classes.', action='store_true')
     parser.add_argument('--compute-val-loss', help='Compute validation loss during training', dest='compute_val_loss', action='store_false')
+    parser.add_argument('--flip-vertical', help='Whether to also randomly flip data vertically', dest='flip_vertical', action='store_true')
 
     # Fit generator arguments
     parser.add_argument('--workers', help='Number of multiprocessing workers. To disable multiprocessing, set workers to 0', type=int, default=1)
@@ -470,7 +478,7 @@ def main(args=None):
         )
 
     # print model summary
-    print(model.summary())
+    
 
     # this lets the generator compute backbone layer shapes using the actual backbone model
     if 'vgg' in args.backbone or 'densenet' in args.backbone:

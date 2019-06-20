@@ -15,6 +15,7 @@ limitations under the License.
 """
 
 import numpy as np
+import tensorflow as tf
 
 DEFAULT_PRNG = np.random
 
@@ -40,6 +41,7 @@ def transform_aabb(transform, aabb):
         The new AABB as tuple (x1, y1, x2, y2)
     """
     x1, y1, x2, y2 = aabb
+    
     # Transform all 4 corners of the AABB.
     points = transform.dot([
         [x1, x2, x1, x2],
@@ -180,6 +182,7 @@ def random_flip(flip_x_chance, flip_y_chance, prng=DEFAULT_PRNG):
     Returns
         a homogeneous 3 by 3 transformation matrix
     """
+    
     flip_x = prng.uniform(0, 1) < flip_x_chance
     flip_y = prng.uniform(0, 1) < flip_y_chance
     # 1 - 2 * bool gives 1 for False and -1 for True.
